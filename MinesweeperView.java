@@ -8,7 +8,7 @@ import javafx.scene.input.MouseButton;
 
 /**
  * Diese Klasse ist für die Anzeige des Spielfelds und Weiterleitung von
- * Benutzereingaben zuständig.
+ * Benutzereingaben zuständig.<br>
  * Zugehörigkeit: View
  * @version 1.0
  * @author CONATH
