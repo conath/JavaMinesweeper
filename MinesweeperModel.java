@@ -3,8 +3,8 @@ import java.util.Random;
 
 /**
  * MinesweeperModel hält das Spielfeld im semantischen Sinn im Speicher
- * und sorgt für den korrekten Spielablauf.
- * Zugehörigkeit: Model. Mutable.
+ * und sorgt für den korrekten Spielablauf.<br>
+ * Zugehörigkeit: Model. Mutable.<br>
  * Die Methoden, die Koordinaten als Parameter haben, erwarten, dass diese
  * innerhalb des Spielfelds liegen (sonst treten IndexOutOfBoundsException ein).
  * @version 1.0
@@ -22,7 +22,7 @@ public class MinesweeperModel {
   private static final int FIELD_BLANK = 0;
   // Number of adjacent mines is stored simply as any fieldContent > 0.
 
-  // User-facing output
+  // Debug output
   private static final char FIELD_MINE_C = '%';
   private static final char FIELD_BLANK_C = ' ';
 
@@ -67,12 +67,12 @@ public class MinesweeperModel {
    *          false if there is already a mine at c,r
    */
   private boolean updateFieldSetNewMine(int c, int r) {
-    // Is there already a mine at c,r? Then there's no need to set it again.
-    if (fieldContent[c][r]<0)
+    // Is there already a mine at c,r? Then a new one can't be placed there.
+    if (fieldContent[c][r] == FIELD_MINE)
       return false;
     for (int x = c-1; x<=c+1; x ++)
       for (int y = r-1; y<=r+1; y ++)
-        if (x>=0 && y>=0 && x<MSS_COLS && y<MSS_ROWS)
+        if (isWithinBounds(x, y))
           if (fieldContent[x][y]>=0)
             fieldContent[x][y] += 1;
     fieldContent[c][r] = FIELD_MINE;
@@ -120,7 +120,7 @@ public class MinesweeperModel {
   }
 
   /**
-   * Determine all connected blank fields.
+   * Mark all connected blank fields as visible.
    * @param c Column of initial field
    * @param r Row of initial field
    * @return All connected fields, e. g. for c==1,r==1 possibly {{1,2},{2,2}}.
@@ -132,9 +132,8 @@ public class MinesweeperModel {
         if (isWithinBounds(x, y) && !(x==c && y==r) && !isVisible[x][y]) {
           if (isNotAMine(x, y))
             reveal(x, y);
-          if (isBlank(x, y)) {
+          if (isBlank(x, y))
             revealAllConnectedBlank(x, y);
-          }
         }
   }
 
@@ -247,7 +246,7 @@ public class MinesweeperModel {
   }
 
   /**
-   * Output field in human readable table.
+   * Serialize field in human readable table-like String, useful for debugging.
    * @return a table representation of the field contents mapped to chars.
    */
   public String toString() {

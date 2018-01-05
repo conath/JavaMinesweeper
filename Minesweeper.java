@@ -4,9 +4,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Eine Implementierung von Minesweeper mit JavaFX.
+ * Eine Implementierung von Minesweeper mit JavaFX.<br>
  * Der Code und enthaltene Dokumentation sowie Kommentare sind in Englisch
- * verfasst.
+ * verfasst.<br>
+ * Zugehörigkeit: Controller<br>
  * Es wird das Entwurfsmuster MVC verwendet. Zur Durchreichung der
  * Benutzereingaben von View zu Controller wird das Delegate-Muster verwendet.
  * Auf die Verwendung des Observer-Muster zur Aktualisierung der View wurde
@@ -70,7 +71,7 @@ public class Minesweeper extends Application
 
   /**
    * Called by the view when the user dismisses the game over
-   * dialog by clicking OK.
+   * dialog by clicking OK. (restart game)
    */
   @Override
   public void endDialogDidSelectOk() {
@@ -80,7 +81,7 @@ public class Minesweeper extends Application
 
   /**
    * Called by the view when the user dismisses the game over
-   * dialog by clicking cancel.
+   * dialog by clicking cancel. (quit game)
    */
   @Override
   public void endDialogDidSelectCancel() {
